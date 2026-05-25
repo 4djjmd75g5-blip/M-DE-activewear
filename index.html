@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MÓDE — Modest Activewear</title>
+  <meta name="description" content="Modest activewear for the woman who moves without compromise." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #FFFFFF;
+      --off:     #F7F5F3;
+      --border:  #E8E4E0;
+      --text:    #111111;
+      --muted:   #888880;
+      --light:   #BBBBBB;
+      --accent:  #B05A7A;   /* single rose accent — logo + 1 button only */
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 40px;
+      height: 60px;
+    }
+
+    .nav-left {
+      display: flex; gap: 28px; align-items: center;
+    }
+    .nav-left a {
+      font-size: 11px; font-weight: 400; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--text);
+      text-decoration: none; transition: color .18s;
+    }
+    .nav-left a:hover { color: var(--muted); }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600; font-size: 20px; letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--accent);        /* only place accent color appears in nav */
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .nav-right {
+      display: flex; gap: 24px; align-items: center; justify-content: flex-end;
+    }
+    .nav-right a, .nav-icon-btn {
+      font-size: 11px; font-weight: 400; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--text);
+      text-decoration: none; background: none; border: none;
+      cursor: pointer; transition: color .18s; display: flex; align-items: center; gap: 5px;
+    }
+    .nav-right a:hover, .nav-icon-btn:hover { color: var(--muted); }
+    .bag-count {
+      background: var(--text); color: white;
+      font-size: 9px; width: 16px; height: 16px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── HERO — two full-bleed category panels ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: calc(100vh - 60px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-panel {
+      position: relative;
+      background: var(--off);
+      display: flex; align-items: flex-end;
+      overflow: hidden; cursor: pointer;
+    }
+    .hero-panel + .hero-panel { border-left: 1px solid var(--border); }
+
+    .hero-panel-img {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-panel-img svg { opacity: .18; }
+
+    /* dark overlay on hover */
+    .hero-panel::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0);
+      transition: background .3s;
+    }
+    .hero-panel:hover::after { background: rgba(0,0,0,.08); }
+
+    .hero-panel-label {
+      position: relative; z-index: 1;
+      padding: 40px 48px;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500; font-size: clamp(28px, 4vw, 52px);
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--text);
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-bar {
+      background: var(--text);
+      padding: 13px 0; overflow: hidden;
+    }
+    .marquee-track {
+      display: flex; white-space: nowrap;
+      animation: marquee 24s linear infinite;
+    }
+    .marquee-item {
+      display: inline-flex; align-items: center; gap: 18px;
+      padding: 0 18px; font-size: 11px; font-weight: 400;
+      letter-spacing: .15em; text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+    }
+    .mx { color: rgba(255,255,255,.2); font-size: 7px; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── SECTION SHARED ── */
+    .section-head {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      padding: 52px 40px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-head-left {}
+    .section-eyebrow {
+      font-size: 10px; font-weight: 400; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500; font-size: clamp(26px, 3.5vw, 40px);
+      color: var(--text); line-height: 1.1;
+    }
+    .view-all {
+      font-size: 11px; font-weight: 400; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--text);
+      text-decoration: none; border-bottom: 1px solid var(--text);
+      padding-bottom: 1px; transition: color .18s, border-color .18s;
+    }
+    .view-all:hover { color: var(--muted); border-color: var(--muted); }
+
+    /* ── PRODUCT GRID — 4 col ── */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .product-card {
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      position: relative;
+      background: var(--bg);
+    }
+    .product-card:nth-child(4n) { border-right: none; }
+
+    .product-img {
+      aspect-ratio: 3/4;
+      background: var(--off);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+
+    /* each card a slightly different neutral so they're distinct */
+    .product-card:nth-child(4n+1) .product-img { background: #F4F1EE; }
+    .product-card:nth-child(4n+2) .product-img { background: #EEECEA; }
+    .product-card:nth-child(4n+3) .product-img { background: #F2EFEC; }
+    .product-card:nth-child(4n+4) .product-img { background: #EEECE9; }
+
+    .product-img-ph {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .product-img-ph svg { opacity: .2; }
+    .product-img-ph span {
+      font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--light);
+    }
+
+    /* NEW tag — plain text, Velocity-style */
+    .tag-new {
+      position: absolute; top: 14px; left: 14px;
+      font-size: 10px; font-weight: 400; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--text);
+    }
+
+    /* hover: reveal quick-add */
+    .quick-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: rgba(255,255,255,.92);
+      padding: 14px; text-align: center;
+      transform: translateY(100%);
+      transition: transform .22s;
+    }
+    .product-card:hover .quick-overlay { transform: translateY(0); }
+    .quick-btn {
+      display: block; width: 100%;
+      background: var(--text); color: white;
+      font-size: 11px; font-weight: 400; letter-spacing: .12em;
+      text-transform: uppercase; padding: 11px;
+      border: none; cursor: pointer; transition: background .18s;
+    }
+    .quick-btn:hover { background: #333; }
+
+    /* product info row */
+    .product-info {
+      padding: 12px 14px 16px;
+      display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+    }
+    .product-left {}
+    .product-name {
+      font-size: 12px; font-weight: 400; letter-spacing: .04em;
+      text-transform: uppercase; color: var(--text); margin-bottom: 3px;
+    }
+    .product-sub { font-size: 11px; color: var(--muted); letter-spacing: .02em; }
+    .product-price { font-size: 12px; font-weight: 400; color: var(--text); white-space: nowrap; }
+
+    /* colour dots */
+    .product-swatches {
+      display: flex; gap: 4px; margin-top: 8px;
+    }
+    .swatch {
+      width: 11px; height: 11px; border-radius: 50%;
+      border: 1px solid rgba(0,0,0,.12); cursor: pointer;
+      transition: transform .15s;
+    }
+    .swatch:hover { transform: scale(1.25); }
+
+    /* ── CATEGORY TILES ── */
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--border);
+    }
+    .cat-tile {
+      aspect-ratio: 3/4;
+      background: var(--off);
+      display: flex; align-items: flex-end;
+      position: relative; overflow: hidden; cursor: pointer;
+      border-right: 1px solid var(--border);
+    }
+    .cat-tile:last-child { border-right: none; }
+    .cat-tile-img {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cat-tile:nth-child(1) { background: #F0EDE9; }
+    .cat-tile:nth-child(2) { background: #EAE8E4; }
+    .cat-tile:nth-child(3) { background: #EDE9E6; }
+
+    .cat-tile::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(0,0,0,0); transition: background .3s;
+    }
+    .cat-tile:hover::after { background: rgba(0,0,0,.07); }
+
+    .cat-label {
+      position: relative; z-index: 1; padding: 28px 32px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(20px, 2.5vw, 30px); font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--text);
+    }
+
+    /* ── ABOUT STRIP ── */
+    .about-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .about-left {
+      padding: 80px 56px 80px 40px;
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+
+    .about-eyebrow {
+      font-size: 10px; font-weight: 400; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 20px;
+    }
+
+    .about-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400; font-style: italic;
+      font-size: clamp(26px, 3vw, 40px);
+      line-height: 1.35; color: var(--text);
+      margin-bottom: 32px;
+    }
+
+    .about-body {
+      font-size: 14px; font-weight: 300;
+      color: var(--muted); line-height: 1.85;
+      max-width: 480px;
+    }
+    .about-body + .about-body { margin-top: 14px; }
+
+    .about-sig {
+      margin-top: 36px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-style: italic; color: var(--text);
+    }
+    .about-sig span {
+      display: block; font-family: 'DM Sans', sans-serif;
+      font-size: 11px; font-style: normal; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--muted); margin-top: 4px;
+    }
+
+    .about-right {
+      background: var(--off);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      min-height: 500px;
+    }
+
+    .about-img-ph {
+      text-align: center;
+    }
+    .about-img-ph svg { opacity: .18; display: block; margin: 0 auto 10px; }
+    .about-img-ph p {
+      font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--light);
+    }
+
+    .about-activities {
+      position: absolute; bottom: 32px; left: 32px;
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .activity-tag {
+      background: var(--bg); border: 1px solid var(--border);
+      font-size: 10px; font-weight: 400; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--text);
+      padding: 6px 14px;
+    }
+
+    /* ── PERKS STRIP ── */
+    .perks {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .perk {
+      padding: 32px 28px;
+      border-right: 1px solid var(--border);
+      display: flex; align-items: flex-start; gap: 14px;
+    }
+    .perk:last-child { border-right: none; }
+    .perk-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+    .perk-title { font-size: 12px; font-weight: 500; letter-spacing: .04em; margin-bottom: 4px; text-transform: uppercase; }
+    .perk-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+    /* ── REVIEWS ── */
+    .reviews-wrap { padding: 72px 40px; }
+    .reviews-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid var(--border);
+    }
+    .review {
+      padding: 36px 32px;
+      border-right: 1px solid var(--border);
+    }
+    .review:last-child { border-right: none; }
+    .review-stars { color: var(--text); font-size: 12px; letter-spacing: 3px; margin-bottom: 14px; }
+    .review-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-style: italic; color: var(--text);
+      line-height: 1.55; margin-bottom: 20px;
+    }
+    .review-author { font-size: 11px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+    /* ── NEWSLETTER ── */
+    .newsletter {
+      background: var(--off);
+      border-top: 1px solid var(--border);
+      padding: 72px 40px;
+      display: flex; align-items: center; justify-content: space-between; gap: 48px;
+    }
+    .nl-left { max-width: 420px; }
+    .nl-eyebrow {
+      font-size: 10px; font-weight: 400; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 12px;
+    }
+    .nl-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500; font-size: clamp(28px, 3.5vw, 44px);
+      color: var(--text); line-height: 1.15;
+    }
+    .nl-right { flex: 1; max-width: 460px; }
+    .nl-form {
+      display: flex;
+      border: 1px solid var(--text);
+    }
+    .nl-input {
+      flex: 1; padding: 14px 18px;
+      font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 300;
+      background: none; border: none; outline: none; color: var(--text);
+    }
+    .nl-input::placeholder { color: var(--light); }
+    .nl-btn {
+      padding: 14px 28px;
+      background: var(--text); color: white;
+      font-size: 11px; font-weight: 400; letter-spacing: .12em; text-transform: uppercase;
+      border: none; cursor: pointer; transition: background .18s; white-space: nowrap;
+    }
+    .nl-btn:hover { background: #333; }
+    .nl-note { margin-top: 12px; font-size: 11px; color: var(--muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text); color: rgba(255,255,255,.4);
+      padding: 64px 40px 36px;
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 48px; padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif; font-weight: 600;
+      font-size: 22px; letter-spacing: .3em; color: rgba(255,255,255,.7);
+      text-decoration: none; display: block; margin-bottom: 14px;
+    }
+    .footer-about { font-size: 13px; color: rgba(255,255,255,.3); line-height: 1.7; }
+    .footer-col-title {
+      font-size: 10px; font-weight: 400; letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(255,255,255,.45); margin-bottom: 18px;
+    }
+    .footer-col-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col-links a {
+      font-size: 12px; color: rgba(255,255,255,.3); text-decoration: none; transition: color .18s;
+    }
+    .footer-col-links a:hover { color: rgba(255,255,255,.7); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center; padding-top: 28px;
+    }
+    .footer-copy { font-size: 11px; letter-spacing: .04em; }
+    .footer-social { display: flex; gap: 20px; }
+    .footer-social a {
+      font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(255,255,255,.3); text-decoration: none; transition: color .18s;
+    }
+    .footer-social a:hover { color: rgba(255,255,255,.7); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .nav-left { display: none; }
+      .hero { grid-template-columns: 1fr; height: auto; }
+      .hero-panel { min-height: 50vw; }
+      .hero-panel + .hero-panel { border-left: none; border-top: 1px solid var(--border); }
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .product-card:nth-child(4n) { border-right: 1px solid var(--border); }
+      .product-card:nth-child(2n) { border-right: none; }
+      .about-section { grid-template-columns: 1fr; }
+      .about-left { padding: 52px 20px; border-right: none; border-bottom: 1px solid var(--border); }
+      .about-right { min-height: 280px; }
+      .categories { grid-template-columns: 1fr; }
+      .cat-tile { border-right: none; border-bottom: 1px solid var(--border); }
+      .perks { grid-template-columns: 1fr 1fr; }
+      .perk:nth-child(2n) { border-right: none; }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .review { border-right: none; border-bottom: 1px solid var(--border); }
+      .review:last-child { border-bottom: none; }
+      .newsletter { flex-direction: column; align-items: flex-start; padding: 52px 20px; }
+      .nl-right { width: 100%; max-width: 100%; }
+      footer { padding: 48px 20px 32px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 14px; }
+      .section-head { padding: 40px 20px 24px; }
+      .reviews-wrap { padding: 52px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-left">
+      <a href="#products">New</a>
+      <a href="#products">Shop</a>
+      <a href="#categories">Collections</a>
+    </div>
+    <a href="#" class="nav-logo">M&Oacute;DE</a>
+    <div class="nav-right">
+      <a href="#">Search</a>
+      <button class="nav-icon-btn" id="bag-btn">
+        Bag
+        <span class="bag-count" id="bag-count">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO — two category panels -->
+  <div class="hero">
+    <div class="hero-panel">
+      <div class="hero-panel-img">
+        <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+          <rect x="10" y="10" width="100" height="100" rx="6" stroke="#999" stroke-width="1.5"/>
+          <circle cx="42" cy="42" r="14" stroke="#999" stroke-width="1.5"/>
+          <path d="M10 88 L42 56 L66 80 L84 62 L110 88" stroke="#999" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="hero-panel-label">Shop Tops</div>
+    </div>
+    <div class="hero-panel">
+      <div class="hero-panel-img">
+        <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+          <rect x="10" y="10" width="100" height="100" rx="6" stroke="#999" stroke-width="1.5"/>
+          <circle cx="42" cy="42" r="14" stroke="#999" stroke-width="1.5"/>
+          <path d="M10 88 L42 56 L66 80 L84 62 L110 88" stroke="#999" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="hero-panel-label">Shop Bottoms</div>
+    </div>
+  </div>
+
+  <!-- MARQUEE -->
+  <div class="marquee-bar">
+    <div class="marquee-track">
+      <span class="marquee-item">Full Coverage <span class="mx">✦</span></span>
+      <span class="marquee-item">Performance Fabric <span class="mx">✦</span></span>
+      <span class="marquee-item">Modest by Design <span class="mx">✦</span></span>
+      <span class="marquee-item">Move Freely <span class="mx">✦</span></span>
+      <span class="marquee-item">Ethically Made <span class="mx">✦</span></span>
+      <span class="marquee-item">XS — 3XL <span class="mx">✦</span></span>
+      <span class="marquee-item">New Arrivals <span class="mx">✦</span></span>
+      <span class="marquee-item">Full Coverage <span class="mx">✦</span></span>
+      <span class="marquee-item">Performance Fabric <span class="mx">✦</span></span>
+      <span class="marquee-item">Modest by Design <span class="mx">✦</span></span>
+      <span class="marquee-item">Move Freely <span class="mx">✦</span></span>
+      <span class="marquee-item">Ethically Made <span class="mx">✦</span></span>
+      <span class="marquee-item">XS — 3XL <span class="mx">✦</span></span>
+      <span class="marquee-item">New Arrivals <span class="mx">✦</span></span>
+    </div>
+  </div>
+
+  <!-- NEW IN -->
+  <div class="section-head" id="products">
+    <div class="section-head-left">
+      <div class="section-eyebrow">SS 2026</div>
+      <h2 class="section-title">New In</h2>
+    </div>
+    <a href="#" class="view-all">View All</a>
+  </div>
+
+  <div class="product-grid">
+
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-ph">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="3" y="3" width="38" height="38" rx="3" stroke="#CCC" stroke-width="1"/><circle cx="15" cy="15" r="5" stroke="#CCC" stroke-width="1"/><path d="M3 34 L15 22 L23 30 L30 23 L41 34" stroke="#CCC" stroke-width="1" stroke-linejoin="round"/></svg>
+          <span>Photo</span>
+        </div>
+        <span class="tag-new">New</span>
+        <div class="quick-overlay"><button class="quick-btn" onclick="addToBag()">Add to Bag</button></div>
+      </div>
+      <div class="product-info">
+        <div class="product-left">
+          <div class="product-name">Aya Long-Sleeve Set</div>
+          <div class="product-sub">4 Colours</div>
+          <div class="product-swatches">
+            <div class="swatch" style="background:#C8B0BE"></div>
+            <div class="swatch" style="background:#B0B8C8"></div>
+            <div class="swatch" style="background:#2C2C2C"></div>
+            <div class="swatch" style="background:#C8C4B0"></div>
+          </div>
+        </div>
+        <div class="product-price">£68</div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-ph">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="3" y="3" width="38" height="38" rx="3" stroke="#CCC" stroke-width="1"/><circle cx="15" cy="15" r="5" stroke="#CCC" stroke-width="1"/><path d="M3 34 L15 22 L23 30 L30 23 L41 34" stroke="#CCC" stroke-width="1" stroke-linejoin="round"/></svg>
+          <span>Photo</span>
+        </div>
+        <span class="tag-new">New</span>
+        <div class="quick-overlay"><button class="quick-btn" onclick="addToBag()">Add to Bag</button></div>
+      </div>
+      <div class="product-info">
+        <div class="product-left">
+          <div class="product-name">Noor Zip-Up Hoodie</div>
+          <div class="product-sub">3 Colours</div>
+          <div class="product-swatches">
+            <div class="swatch" style="background:#C0BAD0"></div>
+            <div class="swatch" style="background:#D8C8B8"></div>
+            <div class="swatch" style="background:#1C1C1C"></div>
+          </div>
+        </div>
+        <div class="product-price">£72</div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-ph">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="3" y="3" width="38" height="38" rx="3" stroke="#CCC" stroke-width="1"/><circle cx="15" cy="15" r="5" stroke="#CCC" stroke-width="1"/><path d="M3 34 L15 22 L23 30 L30 23 L41 34" stroke="#CCC" stroke-width="1" stroke-linejoin="round"/></svg>
+          <span>Photo</span>
+        </div>
+        <span class="tag-new">New</span>
+        <div class="quick-overlay"><button class="quick-btn" onclick="addToBag()">Add to Bag</button></div>
+      </div>
+      <div class="product-info">
+        <div class="product-left">
+          <div class="product-name">Safa Wide-Leg Jogger</div>
+          <div class="product-sub">3 Colours</div>
+          <div class="product-swatches">
+            <div class="swatch" style="background:#D8C8B0"></div>
+            <div class="swatch" style="background:#C8C0D8"></div>
+            <div class="swatch" style="background:#2A2A2A"></div>
+          </div>
+        </div>
+        <div class="product-price">£54</div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-ph">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="3" y="3" width="38" height="38" rx="3" stroke="#CCC" stroke-width="1"/><circle cx="15" cy="15" r="5" stroke="#CCC" stroke-width="1"/><path d="M3 34 L15 22 L23 30 L30 23 L41 34" stroke="#CCC" stroke-width="1" stroke-linejoin="round"/></svg>
+          <span>Photo</span>
+        </div>
+        <div class="quick-overlay"><button class="quick-btn" onclick="addToBag()">Add to Bag</button></div>
+      </div>
+      <div class="product-info">
+        <div class="product-left">
+          <div class="product-name">Hana Sports Abaya</div>
+          <div class="product-sub">2 Colours</div>
+          <div class="product-swatches">
+            <div class="swatch" style="background:#A8C0BC"></div>
+            <div class="swatch" style="background:#2C2C2C"></div>
+          </div>
+        </div>
+        <div class="product-price">£95</div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-ph">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="3" y="3" width="38" height="38" rx="3" stroke="#CCC" stroke-width="1"/><circle cx="15" cy="15" r="5" stroke="#CCC" stroke-width="1"/><path d="M3 34 L15 22 L23 30 L30 23 L41 34" stroke="#CCC" stroke-width="1" stroke-linejoin="round"/></svg>
+          <span>Photo</span>
+        </div>
+        <span class="tag-new">New</span>
+        <div class="quick-overlay"><button class="quick-btn" onclick="addToBag()">Add to Bag</button></div>
+      </div>
+      <div class="product-info">
+        <div class="product-left">
+          <div class="product-name">Layla Ribbed Legging</div>
+          <div class="product-sub">5 Colours</div>
+          <div class="product-swatches">
+            <div class="swatch" style="background:#D0C4C0"></div>
+            <div class="swatch" style="background:#C4CCD0"></div>
+            <div class="swatch" style="background:#C8D0C0"></div>
+            <div class="swatch" style="background:#2C2020"></div>
+            <div class="swatch" style="background:#F0EAE4"></div>
+          </div>
+        </div>
+        <div class="product-price">£58</div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-ph">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="3" y="3" width="38" height="38" rx="3" stroke="#CCC" stroke-width="1"/><circle cx="15" cy="15" r="5" stroke="#CCC" stroke-width="1"/><path d="M3 34 L15 22 L23 30 L30 23 L41 34" stroke="#CCC" stroke-width="1" stroke-linejoin="round"/></svg>
+          <span>Photo</span>
+        </div>
+        <span class="tag-new">New</span>
+        <div class="quick-overlay"><button class="quick-btn" onclick="addToBag()">Add to Bag</button></div>
+      </div>
+      <div class="product-info">
+        <div class="product-left">
+          <div class="product-name">Rania Longline Top</div>
+          <div class="product-sub">4 Colours</div>
+          <div class="product-swatches">
+            <div class="swatch" style="background:#D4C8C8"></div>
+            <div class="swatch" style="background:#C8D0CC"></div>
+            <div class="swatch" style="background:#1C1C1C"></div>
+            <div class="swatch" style="background:#E0D8CC"></div>
+          </div>
+        </div>
+        <div class="product-price">£46</div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-ph">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="3" y="3" width="38" height="38" rx="3" stroke="#CCC" stroke-width="1"/><circle cx="15" cy="15" r="5" stroke="#CCC" stroke-width="1"/><path d="M3 34 L15 22 L23 30 L30 23 L41 34" stroke="#CCC" stroke-width="1" stroke-linejoin="round"/></svg>
+          <span>Photo</span>
+        </div>
+        <div class="quick-overlay"><button class="quick-btn" onclick="addToBag()">Add to Bag</button></div>
+      </div>
+      <div class="product-info">
+        <div class="product-left">
+          <div class="product-name">Dina Flare Trouser</div>
+          <div class="product-sub">3 Colours</div>
+          <div class="product-swatches">
+            <div class="swatch" style="background:#C4BCC8"></div>
+            <div class="swatch" style="background:#1C1C1C"></div>
+            <div class="swatch" style="background:#C8C0B4"></div>
+          </div>
+        </div>
+        <div class="product-price">£62</div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-ph">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="3" y="3" width="38" height="38" rx="3" stroke="#CCC" stroke-width="1"/><circle cx="15" cy="15" r="5" stroke="#CCC" stroke-width="1"/><path d="M3 34 L15 22 L23 30 L30 23 L41 34" stroke="#CCC" stroke-width="1" stroke-linejoin="round"/></svg>
+          <span>Photo</span>
+        </div>
+        <div class="quick-overlay"><button class="quick-btn" onclick="addToBag()">Add to Bag</button></div>
+      </div>
+      <div class="product-info">
+        <div class="product-left">
+          <div class="product-name">Mira Bomber Jacket</div>
+          <div class="product-sub">2 Colours</div>
+          <div class="product-swatches">
+            <div class="swatch" style="background:#222222"></div>
+            <div class="swatch" style="background:#C4B8B0"></div>
+          </div>
+        </div>
+        <div class="product-price">£88</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ABOUT -->
+  <div class="about-section">
+    <div class="about-left">
+      <div class="about-eyebrow">Our Story</div>
+      <p class="about-quote">"I'm a gym girly myself — and I could never find anything that was modest, cute, and actually worked."</p>
+      <p class="about-body">Whether I was at the gym, in a Pilates class, boxing, or just on a walk — I always had the same problem. Everything was either too revealing, too frumpy, or made me choose between looking good and feeling covered.</p>
+      <p class="about-body">I wanted long sleeves that didn't overheat. High waists that stayed up. Fabrics that moved with me and looked just as good off the mat. I searched everywhere and couldn't find it, so I made it myself.</p>
+      <p class="about-body">MÓDE is for every woman who's ever felt like activewear wasn't made for her. It was made for us.</p>
+      <div class="about-sig">
+        Khadidja
+        <span>Founder, MÓDE</span>
+      </div>
+    </div>
+    <div class="about-right">
+      <div class="about-img-ph">
+        <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+          <rect x="5" y="5" width="62" height="62" rx="4" stroke="#BBB" stroke-width="1.2"/>
+          <circle cx="26" cy="26" r="9" stroke="#BBB" stroke-width="1.2"/>
+          <path d="M5 56 L26 35 L40 49 L52 37 L67 56" stroke="#BBB" stroke-width="1.2" stroke-linejoin="round"/>
+        </svg>
+        <p>Founder photo</p>
+      </div>
+      <div class="about-activities">
+        <div class="activity-tag">Gym</div>
+        <div class="activity-tag">Pilates</div>
+        <div class="activity-tag">Boxing</div>
+        <div class="activity-tag">Martial Arts</div>
+        <div class="activity-tag">Walks</div>
+        <div class="activity-tag">Everyday</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHOP BY CATEGORY -->
+  <div class="section-head" id="categories">
+    <div class="section-head-left">
+      <div class="section-eyebrow">Browse</div>
+      <h2 class="section-title">Shop by Category</h2>
+    </div>
+  </div>
+
+  <div class="categories">
+    <div class="cat-tile">
+      <div class="cat-tile-img">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none"><rect x="6" y="6" width="68" height="68" rx="4" stroke="#BBB" stroke-width="1"/><circle cx="28" cy="28" r="10" stroke="#BBB" stroke-width="1"/><path d="M6 60 L28 38 L44 54 L56 42 L74 60" stroke="#BBB" stroke-width="1" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="cat-label">Sets</div>
+    </div>
+    <div class="cat-tile">
+      <div class="cat-tile-img">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none"><rect x="6" y="6" width="68" height="68" rx="4" stroke="#BBB" stroke-width="1"/><circle cx="28" cy="28" r="10" stroke="#BBB" stroke-width="1"/><path d="M6 60 L28 38 L44 54 L56 42 L74 60" stroke="#BBB" stroke-width="1" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="cat-label">Tops</div>
+    </div>
+    <div class="cat-tile">
+      <div class="cat-tile-img">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none"><rect x="6" y="6" width="68" height="68" rx="4" stroke="#BBB" stroke-width="1"/><circle cx="28" cy="28" r="10" stroke="#BBB" stroke-width="1"/><path d="M6 60 L28 38 L44 54 L56 42 L74 60" stroke="#BBB" stroke-width="1" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="cat-label">Bottoms</div>
+    </div>
+  </div>
+
+  <!-- PERKS -->
+  <div class="perks">
+    <div class="perk">
+      <div class="perk-icon">📦</div>
+      <div>
+        <div class="perk-title">Free Shipping</div>
+        <div class="perk-body">On all UK orders over £60.</div>
+      </div>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">↩</div>
+      <div>
+        <div class="perk-title">Easy Returns</div>
+        <div class="perk-body">30-day returns, no questions asked.</div>
+      </div>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">📏</div>
+      <div>
+        <div class="perk-title">Inclusive Sizing</div>
+        <div class="perk-body">Every style available XS through 3XL.</div>
+      </div>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">✦</div>
+      <div>
+        <div class="perk-title">Full Coverage</div>
+        <div class="perk-body">Modest design built in from the start.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEWS -->
+  <div class="reviews-wrap">
+    <div class="section-head" style="padding:0 0 32px; border-bottom:1px solid var(--border); margin-bottom:0;">
+      <div class="section-head-left">
+        <div class="section-eyebrow">Customer Reviews</div>
+        <h2 class="section-title">They said it best.</h2>
+      </div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Finally activewear I can wear to the gym without feeling self-conscious. The fabric is incredible."</p>
+        <div class="review-author">Fatima A. — London</div>
+      </div>
+      <div class="review">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The Aya set doesn't ride up, doesn't go sheer, and looks so good. I've ordered three colours."</p>
+        <div class="review-author">Sara M. — Manchester</div>
+      </div>
+      <div class="review">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"MÓDE is the only brand that's ever made me feel seen as a modest athlete. Truly elite quality."</p>
+        <div class="review-author">Nadia K. — Birmingham</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <div class="newsletter">
+    <div class="nl-left">
+      <div class="nl-eyebrow">Stay in the loop</div>
+      <h2 class="nl-heading">Be first for every new drop.</h2>
+    </div>
+    <div class="nl-right">
+      <form class="nl-form" onsubmit="handleSignup(event)">
+        <input class="nl-input" type="email" placeholder="Enter your email address" required />
+        <button type="submit" class="nl-btn">Subscribe</button>
+      </form>
+      <p class="nl-note">Early access · Exclusive offers · No spam.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <a href="#" class="footer-logo">M&Oacute;DE</a>
+        <p class="footer-about">Modest activewear designed for the woman who moves without compromise. Full coverage. High performance.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Info</p>
+        <ul class="footer-col-links">
+          <li><a href="#">My Account</a></li>
+          <li><a href="#">Find a Store</a></li>
+          <li><a href="#">Wishlist</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Help</p>
+        <ul class="footer-col-links">
+          <li><a href="#">Shipping</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">Sizing Guide</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Guides</p>
+        <ul class="footer-col-links">
+          <li><a href="#">Lookbook</a></li>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Sustainability</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Socials</p>
+        <ul class="footer-col-links">
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">TikTok</a></li>
+          <li><a href="#">Pinterest</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 MÓDE. All rights reserved.</p>
+      <p class="footer-copy">Privacy Policy · Terms of Service</p>
+    </div>
+  </footer>
+
+  <script>
+    let count = 0;
+    function addToBag() {
+      count++;
+      document.getElementById('bag-count').textContent = count;
+    }
+    function handleSignup(e) {
+      e.preventDefault();
+      const input = e.target.querySelector('input');
+      const btn = e.target.querySelector('button');
+      btn.textContent = 'You\'re in ✓';
+      btn.disabled = true;
+      input.disabled = true;
+      input.value = '';
+      input.placeholder = 'Welcome to MÓDE';
+    }
+  </script>
+</body>
+</html>
